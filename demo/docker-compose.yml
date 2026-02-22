@@ -1,0 +1,19 @@
+services:
+  db:
+    image: mysql:8.4
+    container_name: magasin-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: magasin
+      MYSQL_USER: magasin
+      MYSQL_PASSWORD: magasin
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql-init:/docker-entrypoint-initdb.d:ro
+
+volumes:
+  mysql_data:
+
