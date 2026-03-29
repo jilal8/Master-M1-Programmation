@@ -47,6 +47,16 @@ public class ProduitDAOImpl implements ProduitDAO {
         });
     }
 
+    @Override
+    public List<Produit> findByCategorieId(int categorieId) {
+        // TODO (examen): ajouter une relation Produit -> Categorie, puis écrire la JPQL
+        // Exemple attendu (après ajout du mapping) :
+        // return em.createQuery("SELECT p FROM Produit p WHERE p.categorie.id = :id", Produit.class)
+        //         .setParameter("id", categorieId)
+        //         .getResultList();
+        throw new UnsupportedOperationException("TODO (examen): implémenter findByCategorieId(int)");
+    }
+
     private void inTransaction(Runnable work) {
         try {
             em.getTransaction().begin();

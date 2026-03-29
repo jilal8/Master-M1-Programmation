@@ -12,5 +12,8 @@ public interface ProduitDAO {
     void updatePrice(int id, double nouveauPrix);
 
     void deleteById(int id);
+
+    // TODO (examen): lister les produits d'une catégorie (nécessite un lien Produit -> Categorie)
+    List<Produit> findByCategorieId(int categorieId);
 }
 

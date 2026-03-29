@@ -8,6 +8,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>com.example.tp.j2ee.Produit</class>
+        <class>com.example.tp.j2ee.Categorie</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
