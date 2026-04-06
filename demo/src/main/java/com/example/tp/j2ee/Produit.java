@@ -3,6 +3,8 @@ package com.example.tp.j2ee;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +20,10 @@ public class Produit {
     @Column(nullable = false)
     private double prix;
 
+    @ManyToOne
+    @JoinColumn(name = "categorie_id")
+    private Categorie categorie;
+
     public Produit() {
     }
 
@@ -25,6 +31,13 @@ public class Produit {
         this.id = id;
         this.nom = nom;
         this.prix = prix;
+    }
+
+    public Produit(int id, String nom, double prix, Categorie categorie) {
+        this.id = id;
+        this.nom = nom;
+        this.prix = prix;
+        this.categorie = categorie;
     }
 
     public int getId() {
@@ -51,12 +64,20 @@ public class Produit {
         this.prix = prix;
     }
 
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
     @Override
     public String toString() {
-        return "Produit{" +
-                "id=" + id +
+        return "Produit{id=" + id +
                 ", nom='" + nom + '\'' +
                 ", prix=" + prix +
+                ", categorie=" + (categorie != null ? categorie.getNom() : "aucune") +
                 '}';
     }
 }

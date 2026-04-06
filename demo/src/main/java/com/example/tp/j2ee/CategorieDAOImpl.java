@@ -6,7 +6,6 @@ import java.util.List;
 
 public class CategorieDAOImpl implements CategorieDAO {
 
-    @SuppressWarnings("unused")
     private final EntityManager em;
 
     public CategorieDAOImpl(EntityManager em) {
@@ -15,32 +14,49 @@ public class CategorieDAOImpl implements CategorieDAO {
 
     @Override
     public void create(Categorie categorie) {
-        // TODO (examen): begin -> persist(categorie) -> commit (rollback si exception)
-        throw new UnsupportedOperationException("TODO (examen): implémenter create(Categorie)");
+        inTransaction(() -> em.persist(categorie));
     }
 
     @Override
     public Categorie findById(int id) {
-        // TODO (examen): utiliser em.find(Categorie.class, id)
-        throw new UnsupportedOperationException("TODO (examen): implémenter findById(int)");
+        return em.find(Categorie.class, id);
     }
 
     @Override
     public List<Categorie> findAll() {
-        // TODO (examen): JPQL: \"SELECT c FROM Categorie c\"
-        throw new UnsupportedOperationException("TODO (examen): implémenter findAll()");
+        return em.createQuery("SELECT c FROM Categorie c", Categorie.class).getResultList();
     }
 
     @Override
     public void updateNom(int id, String nouveauNom) {
-        // TODO (examen): begin -> find -> setNom -> commit
-        throw new UnsupportedOperationException("TODO (examen): implémenter updateNom(int, String)");
+        inTransaction(() -> {
+            Categorie managed = em.find(Categorie.class, id);
+            if (managed != null) {
+                managed.setNom(nouveauNom);
+            }
+        });
     }
 
     @Override
     public void deleteById(int id) {
-        // TODO (examen): begin -> find -> remove -> commit
-        throw new UnsupportedOperationException("TODO (examen): implémenter deleteById(int)");
+        inTransaction(() -> {
+            Categorie managed = em.find(Categorie.class, id);
+            if (managed != null) {
+                em.remove(managed);
+            }
+        });
+    }
+
+    private void inTransaction(Runnable work) {
+        try {
+            em.getTransaction().begin();
+            work.run();
+            em.getTransaction().commit();
+        } catch (RuntimeException e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
+        }
     }
 }
-
