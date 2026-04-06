@@ -89,6 +89,16 @@
                             <cargo.servlet.port>8080</cargo.servlet.port>
                         </properties>
                     </configuration>
+                    <deployables>
+                        <deployable>
+                            <groupId>com.example.tp.j2ee</groupId>
+                            <artifactId>demo</artifactId>
+                            <type>war</type>
+                            <properties>
+                                <context>magasin</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
                 </configuration>
             </plugin>
         </plugins>
